@@ -14,9 +14,12 @@ class ArticlesController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show(Article $article)
     {
-        $article = Article::find($id);
+        // $article = Article::find($id);
+        // If route does not contain primary key(id), make an extra function in your controller:
+        // public function getRouteKeyName(){return 'nameColumn (slug, for example)';}
+        // return $article;
 
         return view('articles.show', [
             'article' => $article
@@ -30,46 +33,52 @@ class ArticlesController extends Controller
 
     public function store()
     {
-        request()->validate([
-            'title' => 'required',
-            'excerpt' => 'required',
-            'body' => 'required'
-        ]);
+        // First method:
+        // $article = new Article();
+        // $article->title = request('title');
+        // $article->excerpt = request('excerpt');
+        // $article->body = request('body');
+        // $article->save();
 
-        $article = new Article();
-        $article->title = request('title');
-        $article->excerpt = request('excerpt');
-        $article->body = request('body');
-        $article->save();
+        // Second method
+        // Article::create([
+        //     'title' => request('title'),
+        //     'excerpt' => request('excerpt'),
+        //     'body' => request('body')
+        // ]);
+
+        // Third method:
+
+        Article::create($this->validateArticle());
+
+        return redirect(route('articles.index'));
+    }
+
+    public function edit(Article $article)
+    {
+        return view('articles.edit', compact('article'));
+    }
+
+    public function update(Article $article)
+    {
+        $article->udpate($this->validateArticle());
+
+        return redirect($article->path());
+    }
+
+    public function destroy(Article $article)
+    {
+        Article::destroy($article);
 
         return redirect('/articles');
     }
 
-    public function edit($id)
+    protected function validateArticle()
     {
-        $article = Article::find($id);
-        // dd($article);
-        return view('articles.edit', compact('article'));
-    }
-
-    public function update($id)
-    {
-        request()->validate([
+        return request()->validate([
             'title' => 'required',
             'excerpt' => 'required',
             'body' => 'required'
         ]);
-
-        $article = Article::find($id);
-        $article->title = request('title');
-        $article->excerpt = request('excerpt');
-        $article->body = request('body');
-        $article->save();
-
-        return redirect('/articles/' . $article->id);
-    }
-
-    public function destroy()
-    {
     }
 }
