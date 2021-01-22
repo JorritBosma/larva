@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    use HasFactory;
+    protected $fillable = ['title', 'excerpt', 'body'];
+    // protected $guarded is opposite, empty array is no protection
+
+    public function path()
+    {
+        return route('articles.show', $this);
+    }
 }

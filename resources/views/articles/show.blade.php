@@ -11,7 +11,7 @@
             <p><img src="/images/banner.jpg" alt="" class="image image-full" /> </p>
            <p>{{$article->body}}</p>
         </div>
-    </div>
+            </div>
 </div>
 
 
