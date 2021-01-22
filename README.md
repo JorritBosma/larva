@@ -7,6 +7,11 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Meet Jorrit - a fast-growing Laravel-Larva
+As a CodeGorilla in the final stages of the bootcamp I am now in the stage of a Laravel-larva. For the last one-and-a-half month we have been struggling as newbees crawling through the desert called plain PHP and Laravel feels like an oasis where we can finally catch our breath and drink from the Well of a Million Methods. The plain PHP struggle is really paying off though, because we instantly grasp the structure of Laravel, its MVC and its powerful potential.
+This is my practicing repository where I'm coding along with Jeffrey Way from Laracasts in the intermediate course "Laravel from Scratch". After my larva-stage I will become a Laravel-butterfly and will build a nice webshop with my coding buddy Folkert Swart. Currently we are already brainstorming about our project and exploring webshops in the wild. My two previous projects, WandelApp and LeesClub, were primarily for my personal use (I love walking and reading), but now I'd really like to build a webshop which will be used by others. Folkert and I already have some great ideas.
+To be continued!
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
