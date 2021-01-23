@@ -24,7 +24,7 @@ class CreateTagsTable extends Migration
             $table->unsignedBigInteger('tag_id');
             $table->timestamps();
 
-            $table->unique('article_id', 'tag_id');
+            $table->unique(['article_id', 'tag_id']);
 
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
