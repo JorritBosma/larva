@@ -3,24 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
     public function index()
     {
+        if (request('tag')) {
+            $articles = Tag::where('name', request('tag'))->firstOrFail()->articles;
+        } else {
+            $articles = Article::latest()->get();
+        }
+
         return view('articles.index', [
-            'articles' => Article::latest()->get()
+            'articles' => $articles
         ]);
     }
 
     public function show(Article $article)
     {
-        // $article = Article::find($id);
-        // If route does not contain primary key(id), make an extra function in your controller:
-        // public function getRouteKeyName(){return 'nameColumn (slug, for example)';}
-        // return $article;
-
+        // dd($article->tags->pluck('name'));
         return view('articles.show', [
             'article' => $article
         ]);
@@ -28,7 +31,9 @@ class ArticlesController extends Controller
 
     public function create()
     {
-        return view('articles.create');
+        return view('articles.create', [
+            'tags' => Tag::all()
+        ]);
     }
 
     public function store()
@@ -48,8 +53,17 @@ class ArticlesController extends Controller
         // ]);
 
         // Third method:
+        // dd(request()->all());
+        // Article::create($this->validateArticle());
+        $this->validateArticle();
 
-        Article::create($this->validateArticle());
+        $article = new Article(request(['title', 'excerpt', 'body']));
+        $article->user_id = 1; // hardcoded for now, later on use auth()->id()
+        $article->save();
+
+        if (request()->has('tags')) {
+            $article->tags()->attach(request('tags'));
+        }
 
         return redirect(route('articles.index'));
     }
@@ -61,7 +75,7 @@ class ArticlesController extends Controller
 
     public function update(Article $article)
     {
-        $article->udpate($this->validateArticle());
+        $article->update($this->validateArticle());
 
         return redirect($article->path());
     }
@@ -78,7 +92,8 @@ class ArticlesController extends Controller
         return request()->validate([
             'title' => 'required',
             'excerpt' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'tags' => 'exists:tags,id'
         ]);
     }
 }

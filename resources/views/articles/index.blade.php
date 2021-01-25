@@ -3,7 +3,7 @@
 @section ('content')
 <div id="wrapper">
     <div id="page" class="container">
-        @foreach ($articles as $article)
+        @forelse ($articles as $article)
         <div id="content">
 
             <div class="title">
@@ -13,8 +13,9 @@
             <p><img src="/images/banner.jpg" alt="" class="image image-full" /> </p>
            <p>{!!$article->excerpt!!}</p>
         </div>
-
-        @endforeach
+        @empty
+        <h1>Bij deze tag horen nog geen relevante artikelen.</h1>
+        @endforelse
     </div>
 </div>
 
